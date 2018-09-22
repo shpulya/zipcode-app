@@ -1,0 +1,17 @@
+<div class="input-form">
+  <form #f=ngForm (ngSubmit)="onAddZipCode(f)" novalidate>
+    <mat-form-field hintLabel="Should be 5-digit number.">
+      <input type="text" matInput placeholder="Zip Code" name="zipCode" ngModel #zipInput="ngModel"
+             required pattern="^[0-9]{5}"  >
+      <mat-error *ngIf="zipInput.hasError('required')">Field must not be empty.</mat-error>
+      <mat-error *ngIf="!zipInput.hasError('required') && zipInput?.invalid">Zip Code is invalid</mat-error>
+      <mat-hint align="end">{{zipInput.value?.length}}/5</mat-hint>
+    </mat-form-field>
+    <button type="submit" [disabled]="f.invalid" mat-icon-button color="primary">
+      <mat-icon>search</mat-icon>
+    </button>
+  </form>
+  <hr>
+  <app-zip-info (zipCodeClicked)="onRemoveZipCode(zip)" *ngFor="let zip of zipCodes" [zipCode]="zip">
+  </app-zip-info>
+</div>
